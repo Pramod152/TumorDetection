@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brain Tumor Detection</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      h1 {
+        background: rgb(152, 150, 150);
+        padding: 20px;
+      }
+      form {
+        padding: 276px 0 0 752px;
+      }
+      
+
+      .bg_container {
+        background-image: url("../static/tumor.jpg");
+        background-position: center;
+        background-size: cover;
+        height: 834px; /* Set height to 100vh to cover the entire viewport height */
+      }
+
+      #upload-btn-wrapper {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      #upload-btn-wrapper input[type="file"] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+      }
+
+      #upload-btn-wrapper .btn {
+        border: 2px solid gray;
+        color: gray;
+        background-color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      #upload-btn-wrapper .btn:hover {
+        border-color: black;
+      }
+
+      #image-preview {
+        margin-top: 20px;
+        max-width: 100%;
+      }
+
+      #submit {
+        border: 2px solid gray;
+        color: gray;
+        background-color: white;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    
+
+    <h1>Brain Tumor Detection</h1>
+    <div class="bg_container" id="bg_container">
+      <!-- Image Uploader Form -->
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <div id="upload-btn-wrapper">
+          <button class="btn" onclick="uploadImage()">Upload an Image</button>
+          <input type="file" name="file" id="file" accept="image/*" />
+        </div>
+        <br />
+        <!-- Image Preview -->
+        <div id="image-preview"></div>
+
+        <input type="submit" value="Submit" id="submit" />
+      </form>
+    </div>
+
+    <script>
+      function uploadImage() {
+        document.getElementById("file").click();
+      }
+
+      document.getElementById("file").addEventListener("change", function () {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          var imagePreview = document.getElementById("image-preview");
+          imagePreview.innerHTML =
+            '<img src="' +
+            e.target.result +
+            '" alt="Uploaded Image" style="max-width:100%;">';
+
+          // Adjust padding-top of form dynamically
+          var form = document.querySelector("form");
+          form.style.paddingTop = "50px"; // You can adjust this value as needed
+        };
+
+        reader.readAsDataURL(this.files[0]);
+      });
+    </script>
+  </body>
+</html>
